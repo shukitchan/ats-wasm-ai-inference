@@ -11,6 +11,11 @@ cargo update liquid-derive@0.26.10 --precise 0.26.8
 ```
   - To compile, run `cargo build --target=wasm32-wasip1 --release` inside each of the example directory to generate the wasm modules in `target/wasm32-wasip1/release/myfilter.wasm`. Copy it to `/usr/local/var/wasm/`
   - Copy `myfilter.yaml` inside the example directory as well to `/usr/local/var/wasm/`
+  - Make sure we have ATS wasm plugin added to ATS
+```
+wasm.so /usr/local/var/wasm/myfilter.yaml
+```
+  - Turn on debug log for `wasm` label and restart ATS. Proxy a HTTP request through the ATS and see the inference results in the debug log (`traffic.out`)
 
 Imagenet Example
 ====
