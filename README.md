@@ -19,9 +19,9 @@ wasm.so /usr/local/var/wasm/myfilter.yaml
 
 Imagenet Example
 ====
-  - ImageNet challenge: The goal is to categorize images and associate them with one of 1000 labels. In other words, recognize a dog, a cat, a rabbit, or a military uniform.
-  - MobileNet model is a response to the challenge
-  - The basketball image is from unsplash
+  - ImageNet challenge: The goal is to categorize images and associate them with one of [1000 labels](https://github.com/anishathalye/imagenet-simple-labels/blob/master/imagenet-simple-labels.json). In other words, recognize a dog, a cat, a rabbit, or a military uniform.
+  - MobileNet model is a response to the challenge. The model is copied from Fastly AI example
+  - The [basketball image](https://unsplash.com/photos/spalding-basketball-in-court-Gl0jBJJTDWs) is from unsplash
   - Inspired by Fastly AI example and Sonos tract MobileNet example
 
 Links
