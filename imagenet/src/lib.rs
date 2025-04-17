@@ -1,7 +1,6 @@
 use log::trace;
 use proxy_wasm::traits::*;
 use proxy_wasm::types::*;
-use primes::is_prime;
 use std::io::Cursor;
 use tract_flavour::prelude::*;
 
@@ -39,6 +38,8 @@ impl Context for HttpHeaders {}
 impl HttpContext for HttpHeaders {
     fn on_http_request_headers(&mut self, _: usize, _: bool) -> Action {
 
+    trace!("context {}", self.context_id);
+
     let model_bytes = include_bytes!("../models/mobilenet_v2_1.4_224_frozen.pb");
     let model_bytes_len = model_bytes.len();
     trace!("model length {}", model_bytes_len);
@@ -73,4 +74,7 @@ impl HttpContext for HttpHeaders {
 
     trace!("result: {best:?}");
 
+    Action::Continue
+
+    }
 }
