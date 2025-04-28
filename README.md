@@ -24,6 +24,13 @@ Imagenet Example
   - The [basketball image](https://unsplash.com/photos/spalding-basketball-in-court-Gl0jBJJTDWs) is from unsplash
   - Inspired by Fastly AI example and Sonos tract MobileNet example
 
+MNIST example
+====
+  - MNIST: The goal is to identify the hand-written digits
+  - The model comes from https://github.com/onnx/models/
+  - The image is from https://github.com/teavanist/MNIST-JPG/
+  - To compile, run `cargo build --target=wasm32-unknown-unknown --release` instead because the ONNX portion will require some WASI functions that are not yet made available in proxy-wasm
+
 Links
 ====
   - [ATS](https://trafficserver.apache.org)
