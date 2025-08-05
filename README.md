@@ -29,7 +29,7 @@ MNIST example
   - MNIST: The goal is to identify the hand-written digits
   - The model comes from https://github.com/onnx/models/
   - The image is from https://github.com/teavanist/MNIST-JPG/
-  - To compile, run `cargo build --target=wasm32-unknown-unknown --release` instead because the ONNX portion will require some WASI functions that are not yet made available in proxy-wasm
+  - To compile, run `cargo build --target=wasm32-unknown-unknown --release` instead because the ONNX portion will require some WASI functions that are not yet made available in proxy-wasm. This should be fixed after https://github.com/proxy-wasm/proxy-wasm-cpp-host/pull/433
 
 Links
 ====
