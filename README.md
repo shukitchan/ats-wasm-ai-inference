@@ -36,8 +36,8 @@ Notes on Rust 1.82
   - In Rust 1.82, webassembly target support for `reference-types` is on by default.
   - But WAMR does not support `reference-types` by default till 2.3.0
   - Thus we need to wait for `proxy-wasm` to [support WAMR-2.3.0](https://github.com/proxy-wasm/proxy-wasm-cpp-host/issues/449)
-  - For now we can switch to
-    - wasmtime as runtime
+  - For now we can - 
+    - either switch to use wasmtime as runtime
     - or compile the examples with `wasm32-unknown-unknown` as target with the feature turned off
 ```
 RUSTFLAGS="-C target-cpu=mvp" cargo +nightly build -Z build-std=std,panic_abort --target=wasm32-unknown-unknown --release --verbose
