@@ -31,6 +31,10 @@ MNIST example
   - The image is from https://github.com/teavanist/MNIST-JPG/
   - To compile, run `cargo build --target=wasm32-unknown-unknown --release` instead because the ONNX portion will require some WASI functions that are not yet made available in proxy-wasm. This should be fixed after https://github.com/proxy-wasm/proxy-wasm-cpp-host/pull/433
 
+BERT example
+====
+  - TBD
+
 Notes on Rust 1.82
 ====
   - In Rust 1.82, webassembly target support for `reference-types` is on by default.
