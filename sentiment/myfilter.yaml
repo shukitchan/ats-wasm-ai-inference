@@ -1,0 +1,9 @@
+config:
+  name: test
+  rootId: myfilter
+  vmConfig:
+    code:
+      local:
+        filename: /usr/local/var/wasm/myfilter.wasm
+    runtime: ats.wasm.runtime.wamr
+    vmId: test
