@@ -33,7 +33,8 @@ MNIST example
 
 Sentiment analysis example
 ====
-  - TBD
+  - Model comes from huggingface.co
+  - Converted to ONNX and optimized
 
 Notes on Rust 1.82
 ====
