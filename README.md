@@ -29,12 +29,16 @@ MNIST example
   - MNIST: The goal is to identify the hand-written digits
   - The model comes from https://github.com/onnx/models/
   - The image is from https://github.com/teavanist/MNIST-JPG/
-  - To compile, run `cargo build --target=wasm32-unknown-unknown --release` instead because the ONNX portion will require some WASI functions that are not yet made available in proxy-wasm. This should be fixed after https://github.com/proxy-wasm/proxy-wasm-cpp-host/pull/433
+  - We also need the ATS wasm plugin with the fix here - https://github.com/proxy-wasm/proxy-wasm-cpp-host/pull/433 
 
 Sentiment analysis example
 ====
-  - Model comes from huggingface.co
-  - Converted to ONNX and optimized
+  - Model and `tokenizer.json` comes from huggingface.co
+    - https://huggingface.co/tabularisai/robust-sentiment-analysis
+    - The format should be ONNX and optmized - https://huggingface.co/shukitchan2023/robust-sentiment-analysis-ONNX
+    - This can be done through this space - https://huggingface.co/spaces/onnx-community/convert-to-onnx
+  - The full model is too large to be included in the rust program. We opt to use the quantized model instead and so we can skip calling `into_optimized()` on the loaded model.
+  - We also need the ATS wasm plugin with the fix here - https://github.com/proxy-wasm/proxy-wasm-cpp-host/pull/433 
 
 Notes on Rust 1.82
 ====
