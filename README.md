@@ -37,6 +37,10 @@ Sentiment analysis example
     - we want the format to be ONNX and optmized - https://huggingface.co/shukitchan2023/robust-sentiment-analysis-ONNX
     - This can be done through this space - https://huggingface.co/spaces/onnx-community/convert-to-onnx
   - The full model is too large to be included in the rust program. We opt to use the quantized model instead and so we can also skip calling `into_optimized()` on the loaded model.
+  - The program needs an `input` request header as the input for sentiment analysis. Otherwise an error response will be printed instead. e.g.
+```
+curl -v -H 'Host: test.com' -H 'input: "I love Rust and AI!"' 'http://localhost:8080/'
+```    
 
 Notes on Rust 1.82 and WAMR
 ====
