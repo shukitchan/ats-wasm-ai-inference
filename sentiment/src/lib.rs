@@ -36,8 +36,32 @@ struct HttpHeaders {
 impl Context for HttpHeaders {}
 
 impl HttpContext for HttpHeaders {
+
     fn on_http_request_headers(&mut self, _: usize, _: bool) -> Action {
         trace!("context {}", self.context_id);
+
+        // get input
+        let input_text: String = if let Some(input) = self.get_http_request_header("input") {
+            if input != "" {
+                input
+            } else {
+                self.send_http_response(
+                    400,
+                    vec![("Powered-By", "proxy-wasm")],
+                    Some(b"Empty Input\r\n"),
+                );
+                return Action::Continue
+                //"I really love Rust and AI!".to_string()
+            }
+        } else {
+            self.send_http_response(
+                400,
+                vec![("Powered-By", "proxy-wasm")],
+                Some(b"No Input\r\n"),
+            );
+            return Action::Continue
+            //"I really really love Rust and AI!".to_string()
+        };
 
         // Load ONNX model
         let model_bytes = include_bytes!("../models/bert_sentiment.onnx");
@@ -50,8 +74,8 @@ impl HttpContext for HttpHeaders {
         let tokenizer_bytes = include_bytes!("../models/tokenizer.json");
         let tokenizer = Tokenizer::from_bytes(tokenizer_bytes).expect("error loading tokenizer");
 
-        let input_text = "I love Rust and AI!";
-        let encoding = tokenizer.encode(input_text, true).unwrap();
+        //let input_text = "I love Rust and AI!".to_string();
+        let encoding = tokenizer.encode(input_text.as_str(), true).unwrap();
 
         // Prepare input tensors
         let input_ids = encoding.get_ids().to_vec();
@@ -72,12 +96,25 @@ impl HttpContext for HttpHeaders {
         trace!("Logits: {:?}", logits);
         trace!("Probabilities: {:?}", probs);
 
-        // Map to sentiment labels
-        //let labels = ["negative", "neutral", "positive"];
-        //for (label, prob) in labels.iter().zip(probs.iter()) {
-        //    trace!("{}: {:.3}", label, prob);
-        //}
+        // Find the index of the element with the largest value
+        let max_index = probs
+            .iter()
+            .enumerate()
+            .max_by(|a, b| a.1.partial_cmp(b.1).unwrap())
+            .map(|(idx, _)| idx)
+            .unwrap();
+        trace!("Max probability index: {}", max_index);
 
+        // Map to sentiment labels
+        let labels = ["very negative", "negative", "neutral", "positive", "very positive"];
+        let predicted_label = labels[max_index];
+        trace!("Predicted label: {}", predicted_label);
+
+        self.send_http_response(
+                    418,
+                    vec![("Powered-By", "proxy-wasm"), ("Predicted-Label", format!("{}", predicted_label).as_str())],
+                    Some(format!("Input: {} \r\nOk\r\n", input_text).as_bytes()),
+                );
         Action::Continue
     }
 }
