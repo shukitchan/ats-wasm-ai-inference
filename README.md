@@ -1,7 +1,8 @@
 AI Inference Examples for ATS Wasm Plugin
 ====
-  - We tested with wasmtime as the runtime for the ATS Wasm Plugin
-  - We also need the ATS wasm plugin with the fix here - https://github.com/proxy-wasm/proxy-wasm-cpp-host/pull/433 
+  - These examples are tested to work with wasmtime as the runtime for the ATS Wasm Plugin
+  - We also need the ATS wasm plugin with the fix here - https://github.com/proxy-wasm/proxy-wasm-cpp-host/pull/433
+  - These examples are also tested to work with Rust 1.88
   - To compile, run `cargo build --target=wasm32-wasip1 --release` inside each of the example directory to generate the wasm modules in `target/wasm32-wasip1/release/myfilter.wasm`. Copy it to `/usr/local/var/wasm/`
   - Copy `myfilter.yaml` inside the example directory as well to `/usr/local/var/wasm/`
   - Make sure we have ATS wasm plugin added to ATS
