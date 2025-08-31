@@ -48,8 +48,7 @@ Notes on Rust 1.82 and WAMR
   - In Rust 1.82, webassembly target support for `reference-types` is on by default. See [changes](https://releases.rs/docs/1.82.0/) in 1.82
   - WAMR does not support `reference-types` by default till 2.3.0
   - Thus we need to wait for `proxy-wasm` to [support WAMR-2.3.0](https://github.com/proxy-wasm/proxy-wasm-cpp-host/issues/449) if we want to use WAMR as runtime
-  - For now we can do either of the following if we want to use WAMR - 
-    - Stay with rust 1.81 requirement. But we need to downgrade some libraries as well for the compilation
+  - For now, if we want to use WAMR, stay with rust 1.81 requirement. But we need to downgrade some libraries as well for the compilation
 ```
 cargo update liquid@0.26.11 --precise 0.26.9
 cargo update liquid-lib@0.26.11 --precise 0.26.9
@@ -57,7 +56,7 @@ cargo update liquid-core@0.26.11 --precise 0.26.9
 cargo update liquid-derive@0.26.10 --precise 0.26.8
 ```
 
-    - or compile the examples with `wasm32-unknown-unknown` as target with the feature turned off
+  - or compile the examples with `wasm32-unknown-unknown` as target with the feature turned off
 
 ```
 RUSTFLAGS="-C target-cpu=mvp" cargo +nightly build -Z build-std=std,panic_abort --target=wasm32-unknown-unknown --release --verbose
