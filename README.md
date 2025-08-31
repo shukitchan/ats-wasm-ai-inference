@@ -33,7 +33,7 @@ MNIST example
 
 Sentiment analysis example
 ====
-  - Model and `tokenizer.json` comes from huggingface.co
+  - Model and `tokenizer.json` come from huggingface.co
     - https://huggingface.co/tabularisai/robust-sentiment-analysis
     - we want the format to be ONNX and optmized - https://huggingface.co/shukitchan2023/robust-sentiment-analysis-ONNX
     - This can be done through this space - https://huggingface.co/spaces/onnx-community/convert-to-onnx
@@ -48,7 +48,7 @@ Notes on Rust 1.82 and WAMR
   - In Rust 1.82, webassembly target support for `reference-types` is on by default. See [changes](https://releases.rs/docs/1.82.0/) in 1.82
   - WAMR does not support `reference-types` by default till 2.3.0
   - Thus we need to wait for `proxy-wasm` to [support WAMR-2.3.0](https://github.com/proxy-wasm/proxy-wasm-cpp-host/issues/449) if we want to use WAMR as runtime
-  - For now, if we want to use WAMR, stay with rust 1.81 requirement. But we need to downgrade some libraries as well for the compilation
+  - For now, if we want to use WAMR, stay with rust 1.81. But we need to downgrade some libraries as well for the compilation
 ```
 cargo update liquid@0.26.11 --precise 0.26.9
 cargo update liquid-lib@0.26.11 --precise 0.26.9
