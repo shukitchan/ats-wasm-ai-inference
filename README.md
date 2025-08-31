@@ -58,6 +58,7 @@ cargo update liquid-derive@0.26.10 --precise 0.26.8
 ```
 
     - or compile the examples with `wasm32-unknown-unknown` as target with the feature turned off
+
 ```
 RUSTFLAGS="-C target-cpu=mvp" cargo +nightly build -Z build-std=std,panic_abort --target=wasm32-unknown-unknown --release --verbose
 ``` 
