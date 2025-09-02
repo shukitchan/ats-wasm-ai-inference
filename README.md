@@ -11,12 +11,9 @@ wasm.so /usr/local/var/wasm/myfilter.yaml
 ```
   - We can have a very simple `remap.config`
 ```
-map http://test.com/ http://test.com/
+map http://test.com/ http://httpbin.org/
 ```  
-  - Turn on debug log for `wasm` label and restart ATS. Proxy a HTTP request through the ATS and see the inference results in the debug log (`traffic.out`). e.g
-```
-curl -v -H 'Host: test.com' 'http://localhost:8080/'
-```
+  - Turn on debug log for `wasm` label and restart ATS. Proxy a HTTP request through the ATS and see the inference results in the debug log (`traffic.out`).
 
 Imagenet Example
 ====
@@ -24,12 +21,20 @@ Imagenet Example
   - MobileNet model is a response to the challenge. The model is copied from Fastly AI example
   - The [basketball image](https://unsplash.com/photos/spalding-basketball-in-court-Gl0jBJJTDWs) is from unsplash
   - Inspired by Fastly AI example and Sonos tract MobileNet example
+  - See the results from a curl request. e.g.
+```
+curl -v -H 'Host: test.com' 'http://localhost:8080/'
+```
 
 MNIST example
 ====
   - MNIST: The goal is to identify hand-written digits
   - The model comes from https://github.com/onnx/models/
   - The image is from https://github.com/teavanist/MNIST-JPG/
+  - The program needs an image to be posted as part of the request. e.g.
+```
+curl -s -v -H 'Host: test.com' --data-binary '@./images/7.jpg' -H 'content-type: application/x-www-form-urlencoded'  'http://localhost:8080/anything' > /dev/null
+```
 
 Sentiment analysis example
 ====
