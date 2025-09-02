@@ -68,44 +68,8 @@ impl HttpContext for HttpHeaders {
     }
 
     fn on_http_request_headers(&mut self, _: usize, _: bool) -> Action {
-
-    trace!("context {}", self.context_id);
-
-    /*
-    let model_bytes = include_bytes!("../models/mnist-8.onnx");
-    let model_bytes_len = model_bytes.len();
-    trace!("model length {}", model_bytes_len);
-    let model = tract_flavour::onnx()
-        .model_for_read(&mut Cursor::new(model_bytes)).expect("error in loading model")
-        .with_input_fact(0, InferenceFact::dt_shape(f32::datum_type(), tvec!(1, 1, 28, 28))).expect("error specifying input type and shape")
-        // Optimize the model.
-        .into_optimized().expect("error in optimizing")
-        // Make the model runnable and fix its inputs and outputs.
-        .into_runnable().expect("error in making modelrunnable");
-
-    let image_bytes = include_bytes!("../images/7.jpg");
-    let image_bytes_len = image_bytes.len();
-    trace!("image length {}", image_bytes_len);
-    let img = image::load_from_memory(image_bytes).expect("error in loading image").to_luma8();
-    let resized = image::imageops::resize(&img, 28, 28, image::imageops::FilterType::Nearest);
-    let tensor = tract_ndarray::Array4::from_shape_vec((1, 1, 28, 28), resized.into_raw())
-        .unwrap()
-        .mapv(|x| x as f32 / 255.0);
-    let input_tensor: Tensor = tensor.into();
-
-    let result = model.run(tvec!(input_tensor.into())).expect("error in generating results");
-
-    let output = result[0]
-        .to_array_view::<f32>().expect("error in checking the result")
-        .iter()
-        .cloned()
-        .enumerate()
-        .max_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
-
-    trace!("result: {:?}", output);
-    */
-    Action::Continue
-
+        trace!("context {}", self.context_id);
+        Action::Continue
     }
 
     fn on_http_request_body(&mut self, body_size: usize, end_of_stream: bool) -> Action {
@@ -121,50 +85,50 @@ impl HttpContext for HttpHeaders {
             trace!("Request body size: {}", body_bytes.len());
             trace!("Request body bytes: {:?}", body_bytes);
 
-        let image_bytes = &body_bytes;
-        let img = image::load_from_memory(image_bytes).expect("error in loading image").to_luma8();
+            let image_bytes = &body_bytes;
+            let img = image::load_from_memory(image_bytes).expect("error in loading image").to_luma8();
 
-        trace!("Image width: {}", img.width());
-        trace!("Image height: {}", img.height());
+            trace!("Image width: {}", img.width());
+            trace!("Image height: {}", img.height());
 
-    let model_bytes = include_bytes!("../models/mnist-8.onnx");
-    let model_bytes_len = model_bytes.len();
-    trace!("model length {}", model_bytes_len);
-    let model = tract_flavour::onnx()
-        .model_for_read(&mut Cursor::new(model_bytes)).expect("error in loading model")
-        .with_input_fact(0, InferenceFact::dt_shape(f32::datum_type(), tvec!(1, 1, 28, 28))).expect("error specifying input type and shape")
-        // Optimize the model.
-        .into_optimized().expect("error in optimizing")
-        // Make the model runnable and fix its inputs and outputs.
-        .into_runnable().expect("error in making modelrunnable");
+            let model_bytes = include_bytes!("../models/mnist-8.onnx");
+            let model_bytes_len = model_bytes.len();
+            trace!("model length {}", model_bytes_len);
+            let model = tract_flavour::onnx()
+                .model_for_read(&mut Cursor::new(model_bytes)).expect("error in loading model")
+                .with_input_fact(0, InferenceFact::dt_shape(f32::datum_type(), tvec!(1, 1, 28, 28))).expect("error specifying input type and shape")
+                // Optimize the model.
+                .into_optimized().expect("error in optimizing")
+                // Make the model runnable and fix its inputs and outputs.
+                .into_runnable().expect("error in making modelrunnable");
 
-    let resized = image::imageops::resize(&img, 28, 28, image::imageops::FilterType::Nearest);
-    let tensor = tract_ndarray::Array4::from_shape_vec((1, 1, 28, 28), resized.into_raw())
-        .unwrap()
-        .mapv(|x| x as f32 / 255.0);
-    let input_tensor: Tensor = tensor.into();
+            let resized = image::imageops::resize(&img, 28, 28, image::imageops::FilterType::Nearest);
+            let tensor = tract_ndarray::Array4::from_shape_vec((1, 1, 28, 28), resized.into_raw())
+                .unwrap()
+                .mapv(|x| x as f32 / 255.0);
+            let input_tensor: Tensor = tensor.into();
 
-    let result = model.run(tvec!(input_tensor.into())).expect("error in generating results");
+            let result = model.run(tvec!(input_tensor.into())).expect("error in generating results");
 
-    let output = result[0]
-        .to_array_view::<f32>().expect("error in checking the result")
-        .iter()
-        .cloned()
-        .enumerate()
-        .max_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
+            let output = result[0]
+                .to_array_view::<f32>().expect("error in checking the result")
+                .iter()
+                .cloned()
+                .enumerate()
+                .max_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
 
-    trace!("result: {:?}", output);
+            trace!("result: {:?}", output);
 
-    if let Some((index, value)) = output {
-        self.predicted_index = Some(index);
-        self.predicted_confidence = Some(value);
-        trace!("Predicted digit: {}, confidence: {}", index, value);
-    } else {
-        trace!("No prediction could be made.");
-    }
+            if let Some((index, value)) = output {
+                self.predicted_index = Some(index);
+                self.predicted_confidence = Some(value);
+                trace!("Predicted digit: {}, confidence: {}", index, value);
+            } else {
+                trace!("No prediction could be made.");
+            }
 
-    trace!("self.predicted_index: {:?}", self.predicted_index);
-    trace!("self.predicted_confidence: {:?}", self.predicted_confidence);
+            trace!("self.predicted_index: {:?}", self.predicted_index);
+            trace!("self.predicted_confidence: {:?}", self.predicted_confidence);
         }
         Action::Continue
     }
