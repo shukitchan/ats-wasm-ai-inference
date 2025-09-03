@@ -21,9 +21,9 @@ Imagenet Example
   - MobileNet model is a response to the challenge. The model is copied from Fastly AI example
   - The [basketball image](https://unsplash.com/photos/spalding-basketball-in-court-Gl0jBJJTDWs) is from unsplash
   - Inspired by Fastly AI example and Sonos tract MobileNet example
-  - See the results from a curl request. e.g.
+  - The program needs an image to be posed as part of the request. e.g.
 ```
-curl -v -H 'Host: test.com' 'http://localhost:8080/'
+curl -s -v -H "Expect:" -H 'Host: test.com' --data-binary '@./images/bball.jpg' -H 'content-type: application/x-www-form-urlencoded' 'http://localhost:8080/anything' > /dev/null
 ```
 
 MNIST example
