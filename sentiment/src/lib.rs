@@ -64,7 +64,7 @@ impl HttpContext for HttpHeaders {
         };
 
         // Load ONNX model
-        let model_bytes = include_bytes!("../models/bert_sentiment.onnx");
+        let model_bytes = include_bytes!("../models/model_quantized.onnx");
         let model = tract_onnx::onnx()
             .model_for_read(&mut Cursor::new(model_bytes)).expect("error loading model")
 //            .into_optimized().expect("error optimizing model")
