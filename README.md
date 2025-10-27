@@ -31,6 +31,7 @@ MNIST example
   - MNIST: The goal is to identify hand-written digits
   - The model comes from https://github.com/onnx/models/
   - The image is from https://github.com/teavanist/MNIST-JPG/
+  - Inspied by this article - https://nerdssupport.com/building-your-first-ai-model-inference-engine-in-rust/
   - The program needs an image to be posted as part of the request. e.g.
 ```
 curl -s -v -H 'Host: test.com' --data-binary '@./images/7.jpg' -H 'content-type: application/x-www-form-urlencoded'  'http://localhost:8080/anything' > /dev/null
